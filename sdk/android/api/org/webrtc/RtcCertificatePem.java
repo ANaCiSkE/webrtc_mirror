@@ -10,6 +10,9 @@
 
 package org.webrtc;
 
+import androidx.annotation.Nullable;
+import java.util.Collections;
+import java.util.List;
 import org.jni_zero.NativeMethods;
 
 /**
@@ -38,6 +41,21 @@ public class RtcCertificatePem {
   @CalledByNative
   String getCertificate() {
     return certificate;
+  }
+
+  /**
+   * Returns the fingerprints of the certificate, mirroring the WebIDL
+   * RTCCertificate.getFingerprints(). The fingerprints are derived from the PEM
+   * representation; an empty list is returned if they cannot be computed.
+   * Native WebRTC tracks a single fingerprint per certificate, so the list
+   * holds at most one entry. See
+   * https://w3c.github.io/webrtc-pc/#dom-rtccertificate-getfingerprints
+   */
+  public List<DtlsFingerprint> getFingerprints() {
+    DtlsFingerprint fingerprint =
+        RtcCertificatePemJni.get().getFingerprint(privateKey, certificate);
+    return fingerprint == null ? Collections.emptyList()
+                               : Collections.singletonList(fingerprint);
   }
 
   /**
@@ -74,5 +92,7 @@ public class RtcCertificatePem {
   @NativeMethods
   interface Natives {
     RtcCertificatePem generateCertificate(PeerConnection.KeyType keyType, long expires);
+    @Nullable
+    DtlsFingerprint getFingerprint(String privateKey, String certificate);
   }
 }

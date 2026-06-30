@@ -227,6 +227,8 @@ class RtpVideoStreamReceiver2 : public LossNotificationSender,
 
   std::optional<RtpRtcpInterface::SenderReportStats> GetSenderReportStats()
       const;
+  std::optional<RtpRtcpInterface::NonSenderRttStats> GetNonSenderRttStats()
+      const;
 
  private:
   // Implements RtpVideoFrameReceiver.

@@ -3156,6 +3156,26 @@ class WebRtcVideoChannelTest : public WebRtcVideoEngineTest {
   uint32_t last_ssrc_;
 };
 
+// SetReceiveNonSenderRttEnabled may toggle the value after a receive stream
+// has started: false->true enables it, true->false disables it.
+TEST_F(WebRtcVideoChannelTest, ToggleReceiveNonSenderRttAfterStreamStart) {
+  FakeVideoReceiveStream* recv_stream =
+      AddRecvStream(StreamParams::CreateLegacy(kSsrc));
+  // Not negotiated yet -> disabled.
+  EXPECT_FALSE(
+      recv_stream->GetConfig().rtp.rtcp_xr.receiver_reference_time_report);
+
+  // false -> true: enabled on the already-running stream.
+  receive_channel_->SetReceiveNonSenderRttEnabled(true);
+  EXPECT_TRUE(
+      recv_stream->GetConfig().rtp.rtcp_xr.receiver_reference_time_report);
+
+  // true -> false: disabled immediately.
+  receive_channel_->SetReceiveNonSenderRttEnabled(false);
+  EXPECT_FALSE(
+      recv_stream->GetConfig().rtp.rtcp_xr.receiver_reference_time_report);
+}
+
 TEST_F(WebRtcVideoChannelTest, SetsSyncGroupFromSyncLabel) {
   const uint32_t kVideoSsrc = 123;
   const std::string kSyncLabel = "AvSyncLabel";

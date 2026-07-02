@@ -72,7 +72,7 @@ class TransformableFrameInterface {
   // timestamp is not known. Use GetRtpTimestampInfo instead, which makes it
   // possible to make a distinction between these two cases.
   // TODO(https://bugs.webrtc.org/526671875): Deprecate and remove this method.
-  // [[deprecated("Use GetRtpTimestampInfo instead")]]
+  [[deprecated("Use GetRtpTimestampInfo instead")]]
   virtual uint32_t GetTimestamp() const = 0;
   virtual void SetRTPTimestamp(uint32_t rtp_timestamp_with_offset) = 0;
 

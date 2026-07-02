@@ -869,7 +869,11 @@ TEST(AudioSendStreamTest, OnTransportOverheadChanged) {
     EXPECT_CALL(*helper.channel_send(), RegisterPacketOverhead);
 
     const size_t transport_overhead_per_packet_bytes = 333;
-    send_stream->SetTransportOverhead(transport_overhead_per_packet_bytes);
+    BitrateAllocationUpdate update;
+    update.packet_overhead =
+        DataSize::Bytes(transport_overhead_per_packet_bytes);
+    EXPECT_CALL(*helper.channel_send(), OnBitrateAllocation);
+    send_stream->OnBitrateUpdated(update);
 
     EXPECT_EQ(transport_overhead_per_packet_bytes,
               send_stream->TestOnlyGetPerPacketOverheadBytes());
@@ -887,15 +891,21 @@ TEST(AudioSendStreamTest, DoesntCallEncoderWhenOverheadUnchanged) {
     // CallEncoder will be called on overhead change.
     EXPECT_CALL(*helper.channel_send(), CallEncoder);
     const size_t transport_overhead_per_packet_bytes = 333;
-    send_stream->SetTransportOverhead(transport_overhead_per_packet_bytes);
+    BitrateAllocationUpdate update;
+    update.packet_overhead =
+        DataSize::Bytes(transport_overhead_per_packet_bytes);
+    EXPECT_CALL(*helper.channel_send(), OnBitrateAllocation).Times(3);
+    send_stream->OnBitrateUpdated(update);
 
     // Set the same overhead again, CallEncoder should not be called again.
     EXPECT_CALL(*helper.channel_send(), CallEncoder).Times(0);
-    send_stream->SetTransportOverhead(transport_overhead_per_packet_bytes);
+    send_stream->OnBitrateUpdated(update);
 
     // New overhead, call CallEncoder again
     EXPECT_CALL(*helper.channel_send(), CallEncoder);
-    send_stream->SetTransportOverhead(transport_overhead_per_packet_bytes + 1);
+    update.packet_overhead =
+        DataSize::Bytes(transport_overhead_per_packet_bytes + 1);
+    send_stream->OnBitrateUpdated(update);
   }
 }
 
@@ -941,12 +951,12 @@ TEST(AudioSendStreamTest, OnAudioAndTransportOverheadChanged) {
     auto new_config = helper.config();
 
     const size_t transport_overhead_per_packet_bytes = 333;
-    send_stream->SetTransportOverhead(transport_overhead_per_packet_bytes);
-
     BitrateAllocationUpdate update;
     update.target_bitrate =
         DataRate::BitsPerSec(helper.config().max_bitrate_bps) +
         kMaxOverheadRate;
+    update.packet_overhead =
+        DataSize::Bytes(transport_overhead_per_packet_bytes);
     EXPECT_CALL(*helper.channel_send(), OnBitrateAllocation);
     send_stream->OnBitrateUpdated(update);
 

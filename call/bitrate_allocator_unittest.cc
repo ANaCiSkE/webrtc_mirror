@@ -21,6 +21,7 @@
 #include "api/field_trials.h"
 #include "api/transport/network_types.h"
 #include "api/units/data_rate.h"
+#include "api/units/data_size.h"
 #include "api/units/time_delta.h"
 #include "api/units/timestamp.h"
 #include "rtc_base/numerics/safe_conversions.h"
@@ -69,6 +70,8 @@ class TestBitrateObserver : public BitrateAllocatorObserver {
       : last_bitrate_bps_(0),
         last_fraction_loss_(0),
         last_rtt_ms_(0),
+        last_packet_overhead_(DataSize::Zero()),
+        update_count_(0),
         protection_ratio_(0.0) {}
 
   void SetBitrateProtectionRatio(double protection_ratio) {
@@ -80,12 +83,16 @@ class TestBitrateObserver : public BitrateAllocatorObserver {
     last_fraction_loss_ =
         dchecked_cast<uint8_t>(update.packet_loss_ratio * 256);
     last_rtt_ms_ = update.round_trip_time.ms();
+    last_packet_overhead_ = update.packet_overhead;
+    update_count_++;
     return update.target_bitrate.bps() * protection_ratio_;
   }
   std::optional<DataRate> GetUsedRate() const override { return std::nullopt; }
   uint32_t last_bitrate_bps_;
   uint8_t last_fraction_loss_;
   int64_t last_rtt_ms_;
+  DataSize last_packet_overhead_;
+  int update_count_;
   double protection_ratio_;
 };
 
@@ -1175,6 +1182,48 @@ TEST_F(BitrateAllocatorTest, ElasticRateAllocationDontReduceAllocation) {
 
   allocator_->RemoveObserver(&observer_consume);
   allocator_->RemoveObserver(&observer_contribute);
+}
+
+TEST_F(BitrateAllocatorTest, OnTransportOverheadChanged) {
+  TestBitrateObserver observer;
+  AddObserver(&observer, 100000, 400000, 0, true, kDefaultBitratePriority);
+  EXPECT_EQ(1, observer.update_count_);
+  EXPECT_EQ(DataSize::Zero(), observer.last_packet_overhead_);
+
+  // When BWE is set (> 0), increasing transport overhead triggers an update
+  // immediately.
+  allocator_->OnNetworkEstimateChanged(
+      CreateTargetRateMessage(300000, 0, 0));
+  EXPECT_EQ(2, observer.update_count_);
+
+  allocator_->OnTransportOverheadChanged(DataSize::Bytes(50));
+  EXPECT_EQ(3, observer.update_count_);
+  EXPECT_EQ(DataSize::Bytes(50), observer.last_packet_overhead_);
+
+  // Decreasing transport overhead should not trigger an immediate update.
+  allocator_->OnTransportOverheadChanged(DataSize::Bytes(20));
+  EXPECT_EQ(3, observer.update_count_);
+
+  // But the decreased overhead will be sent on the next BWE update.
+  allocator_->OnNetworkEstimateChanged(
+      CreateTargetRateMessage(300000, 0, 0));
+  EXPECT_EQ(4, observer.update_count_);
+  EXPECT_EQ(DataSize::Bytes(20), observer.last_packet_overhead_);
+}
+
+TEST_F(BitrateAllocatorTest, OnTransportOverheadChangedIgnoredWhenNetworkDown) {
+  TestBitrateObserver observer;
+  AddObserver(&observer, 100000, 400000, 0, true, kDefaultBitratePriority);
+
+  // Set network down (target bitrate 0).
+  allocator_->OnNetworkEstimateChanged(
+      CreateTargetRateMessage(0, 0, 0));
+  int count_before = observer.update_count_;
+
+  // Changing transport overhead while target rate is 0 should not notify
+  // observers.
+  allocator_->OnTransportOverheadChanged(DataSize::Bytes(50));
+  EXPECT_EQ(count_before, observer.update_count_);
 }
 
 }  // namespace webrtc

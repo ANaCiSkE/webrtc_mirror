@@ -11,6 +11,7 @@
 #define API_CALL_BITRATE_ALLOCATION_H_
 
 #include "api/units/data_rate.h"
+#include "api/units/data_size.h"
 #include "api/units/time_delta.h"
 
 namespace webrtc {
@@ -31,6 +32,8 @@ struct BitrateAllocationUpdate {
   // VideoStreamEncoder to reduce the bitrate by the given fraction
   // by dropping frames.
   double cwnd_reduce_ratio = 0;
+  // Transport overhead per packet in bytes (IP, UDP, etc.).
+  DataSize packet_overhead = DataSize::Zero();
 };
 
 }  // namespace webrtc

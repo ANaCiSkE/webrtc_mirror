@@ -1028,6 +1028,7 @@ rtc_source_set("bitrate_allocation") {
   sources = [ "call/bitrate_allocation.h" ]
   deps = [
     "units:data_rate",
+    "units:data_size",
     "units:time_delta",
   ]
 }

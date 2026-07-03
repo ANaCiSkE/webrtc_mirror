@@ -15,7 +15,7 @@ vars = {
   # chromium waterfalls. More info at: crbug.com/570091.
   'checkout_configuration': 'default',
   'checkout_instrumented_libraries': 'checkout_linux and checkout_configuration == "default"',
-  'chromium_revision': 'df0237e2865fe022977bddb831e434047876e48f',
+  'chromium_revision': 'c562cf41bee12ff9bdb803b54b0c706fe55281e2',
 
   # Fetch the prebuilt binaries for llvm-cov and llvm-profdata. Needed to
   # process the raw profiles produced by instrumented targets (built with
@@ -92,7 +92,7 @@ deps = {
       'packages': [
           {
               'package': 'chromium/buildtools/third_party/mold/mold',
-              'version': 'YFd2lmKykUBiJA5LyzCoTRAd_2gnRP5XuXc75Yr-9G0C',
+              'version': 'w9QqZ-oP3GovA-zjOawYzb5yca-t47GbT-ejPa0BQmYC',
           },
       ],
       'condition': 'host_os == "linux" and non_git_source',
@@ -500,7 +500,7 @@ deps = {
   },
 
   'src/third_party/boringssl/src':
-    'https://boringssl.googlesource.com/boringssl.git@a945a3ea4cdf8cd683a9d3ad3a66bd3f04a514e6',
+    'https://boringssl.googlesource.com/boringssl.git@1c7d52ef3e3f373302cb957089fa783d1e5fd8cd',
   'src/third_party/breakpad/breakpad':
     'https://chromium.googlesource.com/breakpad/breakpad.git@9aebd3d8ef5a246deb2c929b5666aaba160ebce6',
   'src/third_party/catapult':
@@ -623,7 +623,7 @@ deps = {
       'condition': 'checkout_android',
   },
   'src/third_party/perfetto':
-    Var('chromium_git') + '/external/github.com/google/perfetto.git' + '@' + 'ba8f54bef100edf32e9eefc0c1396e3aa10b03cb',
+    Var('chromium_git') + '/external/github.com/google/perfetto.git' + '@' + '455ee4251cec049ed243d3a61710a531c09ff29e',
   'src/third_party/protobuf-javascript/src':
     Var('chromium_git') + '/external/github.com/protocolbuffers/protobuf-javascript' + '@' + 'e6d763860001ba1a76a63adcff5efb12b1c96024',
   'src/third_party/libvpx/source/libvpx':
@@ -724,7 +724,7 @@ deps = {
     'packages': [
       {
           'package': 'chromium/third_party/androidx',
-          'version': '2QMGUceaZDaOZZt41EQZCQGBhNISrjm4AGuS0SWqFyMC',
+          'version': 'cA38QpLEHRemv_kJYivKGgOgrbx3FQmkCSHnNkr0QCUC',
       },
     ],
     'condition': 'checkout_android and non_git_source',

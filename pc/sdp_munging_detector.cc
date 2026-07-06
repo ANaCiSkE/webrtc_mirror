@@ -501,6 +501,15 @@ SdpMungingType DetermineContentsModification(
       return SdpMungingType::kMid;
     }
 
+    // Rejecting (or unrejecting) an m= section should be done via negotiation,
+    // not munging.
+    if (last_created_contents[content_index].rejected !=
+        contents_to_set[content_index].rejected) {
+      RTC_LOG(LS_WARNING) << "SDP munging: m= section rejected state does not "
+                             "match last created description.";
+      return SdpMungingType::kRejected;
+    }
+
     auto* last_created_media_description =
         last_created_contents[content_index].media_description();
     auto* media_description_to_set =

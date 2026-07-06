@@ -165,6 +165,8 @@ std::optional<int64_t> VideoStreamBufferController::InsertFrame(
            .was_retransmitted = metadata.delayed_by_retransmission});
     }
     if (complete_units < buffer_->GetTotalNumberOfContinuousTemporalUnits()) {
+      timing_->OnContinuousTemporalUnits(buffer_->NewContinuousTemporalUnits(),
+                                         clock_->CurrentTime());
       stats_proxy_->OnCompleteFrame(metadata.is_keyframe, metadata.size,
                                     metadata.contentType);
       MaybeScheduleFrameForRelease();

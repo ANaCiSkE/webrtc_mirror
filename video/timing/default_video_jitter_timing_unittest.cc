@@ -106,6 +106,15 @@ TEST(DefaultVideoJitterTimingTest,
   EXPECT_NE(timing.LocalTime(kRtpTimestamp), std::nullopt);
 }
 
+TEST(DefaultVideoJitterTimingTest, OnContinuousTemporalUnitsReturnsNullopt) {
+  SimulatedClock clock(kInitialTime);
+  Environment env = CreateTestEnvironment({.time = &clock});
+  DefaultVideoJitterTiming timing(env);
+
+  EXPECT_EQ(timing.OnContinuousTemporalUnits({{123}}, clock.CurrentTime()),
+            std::nullopt);
+}
+
 TEST(DefaultVideoJitterTimingTest, OnDecodableTemporalUnitReturnsEstimate) {
   SimulatedClock clock(kInitialTime);
   Environment env = CreateTestEnvironment({.time = &clock});

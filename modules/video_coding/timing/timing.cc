@@ -14,6 +14,7 @@
 #include <cstdint>
 #include <memory>
 #include <optional>
+#include <span>
 #include <utility>
 
 #include "api/field_trials_view.h"
@@ -134,6 +135,17 @@ void VCMTiming::SetMinimumDelay(TimeDelta minimum_delay) {
     if (timings_.current_delay.IsZero()) {
       timings_.current_delay = timings_.minimum_delay;
     }
+  }
+}
+
+void VCMTiming::OnContinuousTemporalUnits(
+    std::span<const uint32_t> rtp_timestamps,
+    Timestamp now) {
+  RTC_DCHECK_RUN_ON(&worker_sequence_checker_);
+  std::optional<TimeDelta> minimum_delay =
+      video_jitter_timing_->OnContinuousTemporalUnits(rtp_timestamps, now);
+  if (minimum_delay.has_value()) {
+    SetMinimumDelay(*minimum_delay);
   }
 }
 

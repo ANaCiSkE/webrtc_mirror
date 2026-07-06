@@ -13,6 +13,7 @@
 
 #include <cstdint>
 #include <optional>
+#include <span>
 
 #include "api/environment/environment.h"
 #include "api/field_trials_view.h"
@@ -41,6 +42,12 @@ class DefaultVideoJitterTiming : public VideoJitterTimingInterface {
 
   // Returns the extrapolated local time for a given RTP timestamp.
   std::optional<Timestamp> LocalTime(uint32_t rtp_timestamp) const override;
+
+  std::optional<TimeDelta> OnContinuousTemporalUnits(
+      std::span<const uint32_t> rtp_timestamps,
+      Timestamp now) override {
+    return std::nullopt;
+  }
 
   // Updates the jitter estimator with information of a decodable temporal unit.
   // Returns the current jitter delay (or nullopt if not available).

@@ -15,6 +15,7 @@
 #include <cstdint>
 #include <memory>
 #include <optional>
+#include <span>
 
 #include "api/field_trials_view.h"
 #include "api/sequence_checker.h"
@@ -91,6 +92,8 @@ class VCMTiming {
 
   // Methods used by video jitter timing.
   void OnCompleteFrame(const VideoJitterTimingInterface::FrameInfo& info);
+  void OnContinuousTemporalUnits(std::span<const uint32_t> rtp_timestamps,
+                                 Timestamp now);
   void OnDecodableTemporalUnit(
       const VideoJitterTimingInterface::TemporalUnitInfo& info);
   void OnNetworkUpdate(const VideoJitterTimingInterface::NetworkInfo& info);

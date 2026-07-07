@@ -198,6 +198,7 @@ rtc_library("candidate") {
     "../rtc_base:net_helper",
     "../rtc_base:network_constants",
     "../rtc_base:socket_address",
+    "../rtc_base:ssl",
     "../rtc_base:stringutils",
     "../rtc_base/system:rtc_export",
     "//third_party/abseil-cpp/absl/base:core_headers",

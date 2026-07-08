@@ -640,6 +640,7 @@ if (current_os == "linux" || is_android) {
       "../../api/audio:audio_processing",
       "../../api/environment",
       "../../api/task_queue:pending_task_safety_flag",
+      "../../rtc_base:base_java_jni",
       "../../rtc_base:checks",
       "../../rtc_base:ip_address",
       "../../rtc_base:logging",
@@ -1644,6 +1645,15 @@ if (is_android) {
   ################
 
   if (rtc_include_tests) {
+    generate_jni("generated_instrumentationtests_jni") {
+      testonly = true
+      sources = [
+        "instrumentationtests/src/org/webrtc/LoggableTest.java",
+        "instrumentationtests/src/org/webrtc/VideoFrameBufferTest.java",
+      ]
+      namespace = "webrtc::jni"
+    }
+
     rtc_instrumentation_test_apk("android_instrumentation_test_apk") {
       apk_name = "android_instrumentation_test_apk"
       android_manifest = "instrumentationtests/AndroidManifest.xml"
@@ -1698,6 +1708,7 @@ if (is_android) {
         ":camera_java",
         ":default_video_codec_factory_java",
         ":filevideo_java",
+        ":generated_instrumentationtests_jni_java",
         ":hwcodecs_java",
         ":libjingle_peerconnection_java",
         ":libjingle_peerconnection_metrics_default_java",
@@ -1713,6 +1724,7 @@ if (is_android) {
         "//third_party/androidx:androidx_test_rules_java",
         "//third_party/androidx:androidx_test_runner_java",
         "//third_party/google-truth:google_truth_java",
+        "//third_party/jni_zero:jni_zero_java",
         "//third_party/junit",
         "//third_party/mockito:mockito_java",
       ]
@@ -1753,6 +1765,7 @@ if (is_android) {
 
       deps = [
         ":base_jni",
+        ":generated_instrumentationtests_jni",
         ":native_api_jni",
         ":videoframe_jni",
         "../../api:scoped_refptr",

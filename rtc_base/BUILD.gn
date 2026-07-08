@@ -2472,6 +2472,12 @@ if (rtc_include_tests) {
 }
 
 if (is_android) {
+  import("//third_party/jni_zero/jni_zero.gni")
+  generate_jni("base_java_jni") {
+    sources = [ "java/src/org/webrtc/Logging.java" ]
+    namespace = "webrtc::jni"
+  }
+
   rtc_android_library("base_java") {
     visibility = [ "*" ]
     sources = [
@@ -2481,7 +2487,11 @@ if (is_android) {
       "java/src/org/webrtc/Size.java",
       "java/src/org/webrtc/ThreadUtils.java",
     ]
-    deps = [ "//third_party/androidx:androidx_annotation_annotation_java" ]
+    deps = [
+      ":base_java_jni_java",
+      "//third_party/androidx:androidx_annotation_annotation_java",
+      "//third_party/jni_zero:jni_zero_java",
+    ]
   }
   java_cpp_enum("network_monitor_enums") {
     sources = [ "network_monitor.h" ]

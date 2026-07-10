@@ -1295,16 +1295,12 @@ if (is_ios || is_mac) {
         rtc_test("sdk_unittests") {
           is_xctest = true
           info_plist = "//test/ios/Info.plist"
-          sources = [ "objc/unittests/main.mm" ]
 
           extra_substitutions = [ "GTEST_BUNDLE_ID_SUFFIX=generic-unit-test" ]
           deps = [
             ":peerconnectionfactory_base_objc",
             ":sdk_unittests_bundle_data",
             ":sdk_unittests_sources",
-            "../rtc_base:threading",
-            "../test:run_loop",
-            "//test:test_support_objc",
           ]
           ldflags = [ "-all_load" ]
         }
@@ -1315,16 +1311,12 @@ if (is_ios || is_mac) {
           info_plist = "//test/ios/Info.plist"
           sources = [
             "objc/unittests/RTCDoNotPutCPlusPlusInFrameworkHeaders_xctest.m",
-            "objc/unittests/main.mm",
           ]
 
           extra_substitutions = [ "GTEST_BUNDLE_ID_SUFFIX=generic-unit-test" ]
           deps = [
             ":framework_objc+link",
             ":ios_framework_bundle",
-            "../rtc_base:threading",
-            "../test:run_loop",
-            "//test:test_support_objc",
           ]
         }
       }

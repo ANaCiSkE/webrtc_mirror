@@ -102,9 +102,8 @@ class PacingController {
     // SetPacingRates() so that this limit will be upheld if
     // `drain_large_queues` is set.
     TimeDelta queue_time_limit = kMaxExpectedQueueLength;
-    // If the first packet of a keyframe is enqueued on a RTP stream, pacer
-    // skips forward to that packet and drops other enqueued packets on that
-    // stream, unless a keyframe is already being paced.
+    // TODO(bugs.webrtc.org/42221435): Remove when downstream usage is gone.
+    [[deprecated("Keyframe flushing is now always enabled.")]]
     bool keyframe_flushing = false;
     // Audio retransmission is prioritized before video retransmission packets.
     bool prioritize_audio_retransmission = false;
@@ -249,7 +248,6 @@ class PacingController {
   const bool pace_audio_;
   const bool ignore_transport_overhead_;
   const bool fast_retransmissions_;
-  const bool keyframe_flushing_;
   DataSize transport_overhead_per_packet_;
   TimeDelta send_burst_interval_;
 

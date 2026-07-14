@@ -102,9 +102,6 @@ class PacingController {
     // SetPacingRates() so that this limit will be upheld if
     // `drain_large_queues` is set.
     TimeDelta queue_time_limit = kMaxExpectedQueueLength;
-    // TODO(bugs.webrtc.org/42221435): Remove when downstream usage is gone.
-    [[deprecated("Keyframe flushing is now always enabled.")]]
-    bool keyframe_flushing = false;
     // Audio retransmission is prioritized before video retransmission packets.
     bool prioritize_audio_retransmission = false;
     // Configure separate timeouts per priority. After a timeout, a packet of

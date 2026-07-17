@@ -6504,6 +6504,25 @@
         "merge": {
           "script": "//testing/merge_scripts/standard_isolated_script_merge.py"
         },
+        "module_name": "//modules/desktop_capture:desktop_capture_mac_unittests",
+        "name": "desktop_capture_mac_unittests",
+        "resultdb": {
+          "result_format": "json"
+        },
+        "swarming": {
+          "dimensions": {
+            "cores": "12",
+            "cpu": "x86-64",
+            "os": "Mac-15"
+          }
+        },
+        "test": "desktop_capture_mac_unittests",
+        "test_id_prefix": "ninja://modules/desktop_capture:desktop_capture_mac_unittests/"
+      },
+      {
+        "merge": {
+          "script": "//testing/merge_scripts/standard_isolated_script_merge.py"
+        },
         "module_name": "//modules:modules_tests",
         "name": "modules_tests",
         "resultdb": {
@@ -7027,6 +7046,25 @@
         "merge": {
           "script": "//testing/merge_scripts/standard_isolated_script_merge.py"
         },
+        "module_name": "//modules/desktop_capture:desktop_capture_mac_unittests",
+        "name": "desktop_capture_mac_unittests",
+        "resultdb": {
+          "result_format": "json"
+        },
+        "swarming": {
+          "dimensions": {
+            "cores": "12",
+            "cpu": "x86-64",
+            "os": "Mac-15"
+          }
+        },
+        "test": "desktop_capture_mac_unittests",
+        "test_id_prefix": "ninja://modules/desktop_capture:desktop_capture_mac_unittests/"
+      },
+      {
+        "merge": {
+          "script": "//testing/merge_scripts/standard_isolated_script_merge.py"
+        },
         "module_name": "//modules:modules_tests",
         "name": "modules_tests",
         "resultdb": {
@@ -7544,6 +7582,24 @@
         "merge": {
           "script": "//testing/merge_scripts/standard_isolated_script_merge.py"
         },
+        "module_name": "//modules/desktop_capture:desktop_capture_mac_unittests",
+        "name": "desktop_capture_mac_unittests",
+        "resultdb": {
+          "result_format": "json"
+        },
+        "swarming": {
+          "dimensions": {
+            "cpu": "x86-64",
+            "os": "Mac-15"
+          }
+        },
+        "test": "desktop_capture_mac_unittests",
+        "test_id_prefix": "ninja://modules/desktop_capture:desktop_capture_mac_unittests/"
+      },
+      {
+        "merge": {
+          "script": "//testing/merge_scripts/standard_isolated_script_merge.py"
+        },
         "module_name": "//modules:modules_tests",
         "name": "modules_tests",
         "resultdb": {
@@ -8035,6 +8091,24 @@
         },
         "test": "dcsctp_unittests",
         "test_id_prefix": "ninja://net/dcsctp:dcsctp_unittests/"
+      },
+      {
+        "merge": {
+          "script": "//testing/merge_scripts/standard_isolated_script_merge.py"
+        },
+        "module_name": "//modules/desktop_capture:desktop_capture_mac_unittests",
+        "name": "desktop_capture_mac_unittests",
+        "resultdb": {
+          "result_format": "json"
+        },
+        "swarming": {
+          "dimensions": {
+            "cpu": "arm64-64-Apple_M1",
+            "os": "Mac-26"
+          }
+        },
+        "test": "desktop_capture_mac_unittests",
+        "test_id_prefix": "ninja://modules/desktop_capture:desktop_capture_mac_unittests/"
       },
       {
         "merge": {
@@ -8562,6 +8636,24 @@
         "merge": {
           "script": "//testing/merge_scripts/standard_isolated_script_merge.py"
         },
+        "module_name": "//modules/desktop_capture:desktop_capture_win_unittests",
+        "name": "desktop_capture_win_unittests",
+        "resultdb": {
+          "result_format": "json"
+        },
+        "swarming": {
+          "dimensions": {
+            "cpu": "x86-64",
+            "os": "Windows-10-19045"
+          }
+        },
+        "test": "desktop_capture_win_unittests",
+        "test_id_prefix": "ninja://modules/desktop_capture:desktop_capture_win_unittests/"
+      },
+      {
+        "merge": {
+          "script": "//testing/merge_scripts/standard_isolated_script_merge.py"
+        },
         "module_name": "//modules:modules_tests",
         "name": "modules_tests",
         "resultdb": {
@@ -9053,6 +9145,24 @@
         },
         "test": "dcsctp_unittests",
         "test_id_prefix": "ninja://net/dcsctp:dcsctp_unittests/"
+      },
+      {
+        "merge": {
+          "script": "//testing/merge_scripts/standard_isolated_script_merge.py"
+        },
+        "module_name": "//modules/desktop_capture:desktop_capture_win_unittests",
+        "name": "desktop_capture_win_unittests",
+        "resultdb": {
+          "result_format": "json"
+        },
+        "swarming": {
+          "dimensions": {
+            "cpu": "x86-64",
+            "os": "Windows-10-19045"
+          }
+        },
+        "test": "desktop_capture_win_unittests",
+        "test_id_prefix": "ninja://modules/desktop_capture:desktop_capture_win_unittests/"
       },
       {
         "merge": {
@@ -9554,6 +9664,24 @@
         "merge": {
           "script": "//testing/merge_scripts/standard_isolated_script_merge.py"
         },
+        "module_name": "//modules/desktop_capture:desktop_capture_win_unittests",
+        "name": "desktop_capture_win_unittests",
+        "resultdb": {
+          "result_format": "json"
+        },
+        "swarming": {
+          "dimensions": {
+            "cpu": "x86-64",
+            "os": "Windows-10-19045"
+          }
+        },
+        "test": "desktop_capture_win_unittests",
+        "test_id_prefix": "ninja://modules/desktop_capture:desktop_capture_win_unittests/"
+      },
+      {
+        "merge": {
+          "script": "//testing/merge_scripts/standard_isolated_script_merge.py"
+        },
         "module_name": "//modules:modules_tests",
         "name": "modules_tests",
         "resultdb": {
@@ -10045,6 +10173,24 @@
         },
         "test": "dcsctp_unittests",
         "test_id_prefix": "ninja://net/dcsctp:dcsctp_unittests/"
+      },
+      {
+        "merge": {
+          "script": "//testing/merge_scripts/standard_isolated_script_merge.py"
+        },
+        "module_name": "//modules/desktop_capture:desktop_capture_win_unittests",
+        "name": "desktop_capture_win_unittests",
+        "resultdb": {
+          "result_format": "json"
+        },
+        "swarming": {
+          "dimensions": {
+            "cpu": "x86-64",
+            "os": "Windows-10-19045"
+          }
+        },
+        "test": "desktop_capture_win_unittests",
+        "test_id_prefix": "ninja://modules/desktop_capture:desktop_capture_win_unittests/"
       },
       {
         "merge": {

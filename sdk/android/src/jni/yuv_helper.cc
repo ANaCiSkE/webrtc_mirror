@@ -160,3 +160,5 @@ void JNI_YuvHelper_AbgrToI420(JNIEnv* jni,
 
 }  // namespace jni
 }  // namespace webrtc
+
+DEFINE_JNI(YuvHelper)

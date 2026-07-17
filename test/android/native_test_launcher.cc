@@ -122,3 +122,5 @@ void InstallHandlers() {
 }  // namespace android
 }  // namespace test
 }  // namespace webrtc
+
+DEFINE_JNI(NativeTestWebrtc)

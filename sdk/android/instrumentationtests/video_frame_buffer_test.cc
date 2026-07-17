@@ -47,3 +47,5 @@ JNI_VideoFrameBufferTest_GetNativeI420Buffer(
 
 }  // namespace jni
 }  // namespace webrtc
+
+DEFINE_JNI(VideoFrameBufferTest)

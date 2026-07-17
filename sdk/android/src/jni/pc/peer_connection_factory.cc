@@ -586,3 +586,5 @@ static void JNI_PeerConnectionFactory_PrintStackTrace(JNIEnv* env, jint tid) {
 
 }  // namespace jni
 }  // namespace webrtc
+
+DEFINE_JNI(PeerConnectionFactory)

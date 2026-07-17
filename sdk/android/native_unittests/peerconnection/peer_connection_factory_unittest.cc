@@ -183,3 +183,5 @@ TEST(PeerConnectionFactoryTest, OwnedFactoryAndThreadsDestructionOrder) {
 }  // namespace
 }  // namespace test
 }  // namespace webrtc
+
+DEFINE_JNI(PeerConnectionFactoryInitializationHelper)

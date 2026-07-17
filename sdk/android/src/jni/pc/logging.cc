@@ -51,3 +51,5 @@ static void JNI_Logging_Log(JNIEnv* jni,
 
 }  // namespace jni
 }  // namespace webrtc
+
+DEFINE_JNI(Logging)

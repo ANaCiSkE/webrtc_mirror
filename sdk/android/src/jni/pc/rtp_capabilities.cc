@@ -128,3 +128,5 @@ RtpCodecCapability JavaToNativeRtpCodecCapability(
 
 }  // namespace jni
 }  // namespace webrtc
+
+DEFINE_JNI(RtpCapabilities)

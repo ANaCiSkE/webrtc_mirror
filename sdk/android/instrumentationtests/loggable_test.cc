@@ -30,3 +30,5 @@ static void JNI_LoggableTest_LogInfoTestMessage(
 
 }  // namespace jni
 }  // namespace webrtc
+
+DEFINE_JNI(LoggableTest)

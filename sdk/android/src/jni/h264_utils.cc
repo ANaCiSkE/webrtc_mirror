@@ -30,3 +30,5 @@ static jboolean JNI_H264Utils_IsSameH264Profile(
 
 }  // namespace jni
 }  // namespace webrtc
+
+DEFINE_JNI(H264Utils)

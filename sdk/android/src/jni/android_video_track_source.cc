@@ -215,3 +215,5 @@ void AndroidVideoTrackSource::AdaptOutputFormat(
 
 }  // namespace jni
 }  // namespace webrtc
+
+DEFINE_JNI(NativeAndroidVideoTrackSource)

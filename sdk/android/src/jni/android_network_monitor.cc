@@ -725,3 +725,6 @@ void AndroidNetworkMonitor::NotifyOfNetworkPreference(
 
 }  // namespace jni
 }  // namespace webrtc
+
+DEFINE_JNI(NetworkChangeDetector)
+DEFINE_JNI(NetworkMonitor)

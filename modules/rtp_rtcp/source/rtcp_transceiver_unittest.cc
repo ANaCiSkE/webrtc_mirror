@@ -71,7 +71,6 @@ TEST(RtcpTransceiverTest, SendsRtcpOnTaskQueueWhenCreatedOffTaskQueue) {
   config.task_queue = queue.Get();
   EXPECT_CALL(outgoing_transport, Call).WillRepeatedly(InvokeWithoutArgs([&] {
     EXPECT_TRUE(queue.IsCurrent());
-    return true;
   }));
 
   RtcpTransceiver rtcp_transceiver(config);
@@ -89,7 +88,6 @@ TEST(RtcpTransceiverTest, SendsRtcpOnTaskQueueWhenCreatedOnTaskQueue) {
   config.task_queue = queue.Get();
   EXPECT_CALL(outgoing_transport, Call).WillRepeatedly(InvokeWithoutArgs([&] {
     EXPECT_TRUE(queue.IsCurrent());
-    return true;
   }));
 
   std::unique_ptr<RtcpTransceiver> rtcp_transceiver;
@@ -236,10 +234,8 @@ TEST(RtcpTransceiverTest, CanCallSendCompoundPacketFromAnyThread) {
   EXPECT_CALL(outgoing_transport, Call)
       // If test is slow, a periodic task may send an extra packet.
       .Times(AtLeast(3))
-      .WillRepeatedly(InvokeWithoutArgs([&] {
-        EXPECT_TRUE(queue.IsCurrent());
-        return true;
-      }));
+      .WillRepeatedly(
+          InvokeWithoutArgs([&] { EXPECT_TRUE(queue.IsCurrent()); }));
 
   RtcpTransceiver rtcp_transceiver(config);
 

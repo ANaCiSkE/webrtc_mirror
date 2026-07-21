@@ -229,7 +229,6 @@ class RtpTransportControllerSend final
   NetworkControllerConfig initial_config_ RTC_GUARDED_BY(worker_thread_);
   StreamsConfig streams_config_ RTC_GUARDED_BY(worker_thread_);
 
-  const bool add_pacing_to_cwin_;
   const bool reset_bwe_on_adapter_id_change_;
 
   DataSize transport_overhead_per_packet_ RTC_GUARDED_BY(worker_thread_) =

@@ -117,8 +117,6 @@ RtpTransportControllerSend::RtpTransportControllerSend(
       process_interval_(TimeDelta::PlusInfinity()),
       last_report_block_time_(env_.clock().CurrentTime()),
       initial_config_(env_),
-      add_pacing_to_cwin_(env_.field_trials().IsEnabled(
-          "WebRTC-AddPacingToCongestionWindowPushback")),
       reset_bwe_on_adapter_id_change_(
           env_.field_trials().IsEnabled("WebRTC-Bwe-ResetOnAdapterIdChange")),
       network_available_(false),
@@ -858,8 +856,7 @@ void RtpTransportControllerSend::UpdateControllerWithTimeInterval() {
   RTC_DCHECK(controller_);
   ProcessInterval msg;
   msg.at_time = env_.clock().CurrentTime();
-  if (add_pacing_to_cwin_)
-    msg.pacer_queue = pacer_.QueueSizeData();
+  msg.pacer_queue = pacer_.QueueSizeData();
   PostUpdates(controller_->OnProcessInterval(msg));
 }
 

@@ -805,8 +805,12 @@ class RTCStatsReportVerifier {
       verifier.TestAttributeIsNonNegative<uint32_t>(outbound_stream.pli_count);
       if (*outbound_stream.frames_encoded > 0) {
         verifier.TestAttributeIsNonNegative<uint64_t>(outbound_stream.qp_sum);
+        verifier.TestAttributeIsDefined(outbound_stream.psnr_sum);
+        verifier.TestAttributeIsNonNegative(outbound_stream.psnr_measurements);
       } else {
         verifier.TestAttributeIsUndefined(outbound_stream.qp_sum);
+        verifier.TestAttributeIsUndefined(outbound_stream.psnr_sum);
+        verifier.TestAttributeIsUndefined(outbound_stream.psnr_measurements);
       }
     } else {
       verifier.TestAttributeIsUndefined(outbound_stream.fir_count);
@@ -814,10 +818,9 @@ class RTCStatsReportVerifier {
       verifier.TestAttributeIsIDReference(outbound_stream.media_source_id,
                                           RTCAudioSourceStats::kType);
       verifier.TestAttributeIsUndefined(outbound_stream.qp_sum);
+      verifier.TestAttributeIsUndefined(outbound_stream.psnr_sum);
+      verifier.TestAttributeIsUndefined(outbound_stream.psnr_measurements);
     }
-    // TODO: bugs.webrtc.org/388070060 - PSNR stats are disabled by default.
-    verifier.TestAttributeIsUndefined(outbound_stream.psnr_sum);
-    verifier.TestAttributeIsUndefined(outbound_stream.psnr_measurements);
 
     verifier.TestAttributeIsNonNegative<uint32_t>(outbound_stream.nack_count);
     verifier.TestAttributeIsOptionalIDReference(
@@ -1325,29 +1328,6 @@ TEST_F(RTCStatsIntegrationTest, GetStatsAfterClose) {
   scoped_refptr<const RTCStatsReport> report = GetStatsFromCaller();
   ASSERT_EQ(report->size(), 1u);
   EXPECT_EQ(report->begin()->type(), RTCPeerConnectionStats::kType);
-}
-
-TEST_F(RTCStatsIntegrationTest, ExperimentalPsnrStats) {
-  StartCall("WebRTC-Video-CalculatePsnr/Enabled,sampling_interval:1000ms/");
-
-  // This assumes all other stats are ok and tests the stats which should be
-  // different under the field trial.
-  scoped_refptr<const RTCStatsReport> report = GetStatsFromCaller();
-  for (const RTCStats& stats : *report) {
-    if (stats.type() == RTCOutboundRtpStreamStats::kType) {
-      const RTCOutboundRtpStreamStats& outbound_stream(
-          stats.cast_to<RTCOutboundRtpStreamStats>());
-      RTCStatsVerifier verifier(report.get(), &outbound_stream);
-      if (outbound_stream.kind.has_value() &&
-          *outbound_stream.kind == "video") {
-        verifier.TestAttributeIsDefined(outbound_stream.psnr_sum);
-        verifier.TestAttributeIsNonNegative(outbound_stream.psnr_measurements);
-      } else {
-        verifier.TestAttributeIsUndefined(outbound_stream.psnr_sum);
-        verifier.TestAttributeIsUndefined(outbound_stream.psnr_measurements);
-      }
-    }
-  }
 }
 
 TEST_F(RTCStatsIntegrationTest, ExperimentalTransportCcfbStats) {
